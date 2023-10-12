@@ -1,0 +1,29 @@
+Package: walking.fingerprint
+Title: Identify Participants from Accelerometry-derived Walking Pattern
+Version: 0.0.0.9000
+Authors@R: 
+  c(person(given = "John",
+           family = "Muschelli",
+           email = "muschellij2@gmail.com",
+           role = c("aut"),
+           comment = c(ORCID = "0000-0001-6469-1750")),
+    person(given = "Lily",
+           family = "Koffman",
+           email = "lkoffman2@jh.edu",
+           role = c("aut", "cre"))       
+           )
+Description: Derives pattern of walking from wrist-worn 'accelerometers',
+  and creates a subject-level predictor that can be used as an identifier.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    assertthat (>= 0.2.1),
+    dplyr,
+    lubridate,
+    magrittr,
+    recipes
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
