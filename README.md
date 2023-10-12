@@ -4,6 +4,8 @@
 # walking.fingerprint
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/muschellij2/walking.fingerprint/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/muschellij2/walking.fingerprint/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of walking.fingerprint is to derive patterns of walking from
