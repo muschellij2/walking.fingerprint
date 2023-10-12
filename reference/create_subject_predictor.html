@@ -42,7 +42,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_subject_predictor</span><span class="op">(</span><span class="va">data</span>, max_signal <span class="op">=</span> <span class="fl">3</span>, bin_size <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_subject_predictor</span><span class="op">(</span><span class="va">data</span>, max_signal <span class="op">=</span> <span class="fl">3</span>, bin_size <span class="op">=</span> <span class="fl">0.25</span>, n_lags <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -61,6 +61,12 @@ grid will be <code>0</code> to <code>max_signal</code> by <code>bin_size</code><
 evenly divisible by <code>bin_size</code>.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>A <code>data.frame</code> of subject level lags and cut-values</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
