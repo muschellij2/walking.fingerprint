@@ -4,7 +4,7 @@
 \alias{create_subject_predictor}
 \title{Create Grid Data for single subject from raw accelerometry}
 \usage{
-create_subject_predictor(data, max_signal = 3, bin_size = 0.25)
+create_subject_predictor(data, max_signal = 3, bin_size = 0.25, n_lags = 3)
 }
 \arguments{
 \item{data}{a \code{data.frame} with the columns \code{time} and \code{vm}}
@@ -14,6 +14,9 @@ grid will be \code{0} to \code{max_signal} by \code{bin_size}}
 
 \item{bin_size}{Size of the bins. \code{max_signal} must be
 evenly divisible by \code{bin_size}.}
+}
+\value{
+A \code{data.frame} of subject level lags and cut-values
 }
 \description{
 Create Grid Data for single subject from raw accelerometry

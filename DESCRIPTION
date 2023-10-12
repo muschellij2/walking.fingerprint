@@ -23,6 +23,7 @@ Imports:
     dplyr,
     lubridate,
     magrittr,
+    purrr,
     recipes
 Suggests: 
     testthat (>= 3.0.0)
