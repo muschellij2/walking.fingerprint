@@ -6,6 +6,7 @@
 #' grid will be `0` to `max_signal` by `bin_size`
 #' @param bin_size Size of the bins. `max_signal` must be
 #' evenly divisible by `bin_size`.
+#' @param n_lags number of lags
 #'
 #' @return A `data.frame` of subject level lags and cut-values
 #' @export
@@ -15,7 +16,7 @@ create_subject_predictor = function(
     data,
     max_signal = 3,
     bin_size = 0.25,
-    n_lags = 3
+    n_lags = 3L
 ) {
   cut_lagsig = cut_sig = vm = lag_vm = time = second = NULL
   rm(list = c("time", "second", "vm", "lag_vm",
@@ -28,8 +29,10 @@ create_subject_predictor = function(
   )
   assertthat::assert_that(
     assertthat::is.count(max_signal/bin_size),
-    is.finite(max_signal/bin_size)
+    is.finite(max_signal/bin_size),
+    assertthat::is.count(n_lags)
   )
+  n_lags = as.integer(n_lags)
 
   data = data %>%
     dplyr::mutate(second = lubridate::floor_date(
