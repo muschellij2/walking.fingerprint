@@ -13,10 +13,12 @@ testthat::test_that(
     testthat::expect_true(
       all(c("lag_3_(2.75,3]_(2.75,3]", "second") %in% colnames(out))
     )
+    testthat::expect_true(!anyNA(out$second))
 
     testthat::expect_warning(
-      create_subject_predictor(df, lags = c(1, 101)),
+      {out = create_subject_predictor(df, lags = c(1, 101))},
       regexp = "max samples in a second"
     )
+    testthat::expect_true(!anyNA(out$second))
 
-})
+  })

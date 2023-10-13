@@ -79,6 +79,9 @@ create_subject_predictor = function(
         )
       ) %>%
       dplyr::filter(!is.na(cut_sig) & !is.na(cut_lagsig))
+    if (nrow(out) == 0) {
+      return(NULL)
+    }
     out = out %>%
       dplyr::count(second, cut_sig, cut_lagsig, .drop = FALSE) %>%
       dplyr::mutate(
