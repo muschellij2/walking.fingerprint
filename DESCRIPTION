@@ -24,8 +24,12 @@ Imports:
     lubridate,
     magrittr,
     purrr,
-    recipes
+    recipes,
+    tidyr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: http://johnmuschelli.com/walking.fingerprint/
+Depends: 
+    R (>= 2.10)
+LazyData: true

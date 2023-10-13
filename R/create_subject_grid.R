@@ -6,17 +6,21 @@
 #' grid will be `0` to `max_signal` by `bin_size`
 #' @param bin_size Size of the bins. `max_signal` must be
 #' evenly divisible by `bin_size`.
-#' @param n_lags number of lags
+#' @param lags the lag (in samples, not seconds) to compute bin inclusion.
 #'
 #' @return A `data.frame` of subject level lags and cut-values
 #' @export
 #'
 #' @examples
+#' df = example_walking %>%
+#'    dplyr::mutate(time = lubridate::floor_date(Sys.time(), "seconds") + time)
+#' create_subject_predictor(df)
+#' create_subject_predictor(df, lags = c(1, 15))
 create_subject_predictor = function(
     data,
     max_signal = 3,
     bin_size = 0.25,
-    n_lags = 3L
+    lags = c(1, 2, 3)
 ) {
   cut_lagsig = cut_sig = vm = lag_vm = time = second = NULL
   rm(list = c("time", "second", "vm", "lag_vm",
@@ -30,21 +34,21 @@ create_subject_predictor = function(
   assertthat::assert_that(
     assertthat::is.count(max_signal/bin_size),
     is.finite(max_signal/bin_size),
-    assertthat::is.count(n_lags)
+    is.integer(lags) ||
+       (is.numeric(lags) && all(lags == trunc(lags))),
+    !any(is.na(lags))
   )
-  n_lags = as.integer(n_lags)
 
   data = data %>%
     dplyr::mutate(second = lubridate::floor_date(
-      dplyr::.data[["time"]], "second"))
+      .data[["time"]], "second"))
   check = data %>%
-    dplyr::count(dplyr::.data[["second"]])
+    dplyr::count(.data[["second"]])
   assertthat::assert_that(
     any(check$n > 1)
   )
 
   cell_breaks = seq(0, max_signal, by = bin_size)
-  lags = seq(n_lags)
 
   result = purrr::map_dfr(lags, .f = function(lag) {
     out = data %>%
@@ -64,13 +68,21 @@ create_subject_predictor = function(
           include.lowest = TRUE
         )
       ) %>%
-      dplyr::filter(!is.na(cut_sig) | !is.na(cut_lagsig))
+      dplyr::filter(!is.na(cut_sig) & !is.na(cut_lagsig))
     out = out %>%
       dplyr::count(second, cut_sig, cut_lagsig, .drop = FALSE) %>%
       dplyr::mutate(
-        lag = lag
+        lag = paste0("lag_", lag)
       )
   })
+
+  result = result %>%
+    tidyr::pivot_wider(
+      id_cols = c(second),
+      names_from = c(lag, cut_sig, cut_lagsig),
+      names_sep = "_",
+      values_from = n
+    )
 
   return(result)
 }

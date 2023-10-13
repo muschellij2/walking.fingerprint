@@ -4,7 +4,12 @@
 \alias{create_subject_predictor}
 \title{Create Grid Data for single subject from raw accelerometry}
 \usage{
-create_subject_predictor(data, max_signal = 3, bin_size = 0.25, n_lags = 3L)
+create_subject_predictor(
+  data,
+  max_signal = 3,
+  bin_size = 0.25,
+  lags = c(1, 2, 3)
+)
 }
 \arguments{
 \item{data}{a \code{data.frame} with the columns \code{time} and \code{vm}}
@@ -15,11 +20,17 @@ grid will be \code{0} to \code{max_signal} by \code{bin_size}}
 \item{bin_size}{Size of the bins. \code{max_signal} must be
 evenly divisible by \code{bin_size}.}
 
-\item{n_lags}{number of lags}
+\item{lags}{the lag (in samples, not seconds) to compute bin inclusion.}
 }
 \value{
 A \code{data.frame} of subject level lags and cut-values
 }
 \description{
 Create Grid Data for single subject from raw accelerometry
+}
+\examples{
+df = example_walking \%>\%
+   dplyr::mutate(time = lubridate::floor_date(Sys.time(), "seconds") + time)
+create_subject_predictor(df)
+create_subject_predictor(df, lags = c(1, 15))
 }
