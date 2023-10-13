@@ -8,7 +8,7 @@ create_subject_predictor(
   data,
   max_signal = 3,
   bin_size = 0.25,
-  lags = c(1, 2, 3)
+  lags = c(15, 30, 45)
 )
 }
 \arguments{

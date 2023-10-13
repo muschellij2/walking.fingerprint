@@ -20,7 +20,7 @@ create_subject_predictor = function(
     data,
     max_signal = 3,
     bin_size = 0.25,
-    lags = c(1, 2, 3)
+    lags = c(15, 30, 45)
 ) {
   cut_lagsig = cut_sig = vm = lag_vm = time = second = NULL
   rm(list = c("time", "second", "vm", "lag_vm",
@@ -35,7 +35,7 @@ create_subject_predictor = function(
     assertthat::is.count(max_signal/bin_size),
     is.finite(max_signal/bin_size),
     is.integer(lags) ||
-       (is.numeric(lags) && all(lags == trunc(lags))),
+      (is.numeric(lags) && all(lags == trunc(lags))),
     !any(is.na(lags))
   )
 
@@ -47,6 +47,16 @@ create_subject_predictor = function(
   assertthat::assert_that(
     any(check$n > 1)
   )
+
+  n_second = data %>%
+    dplyr::count(second)
+  max_records = max(n_second$n)
+  if (max(lags) >= max_records) {
+    warning(
+      paste0("There are ", max_records, " max samples in a second,",
+             " but max lag is ", max(lags), ", likely an error!")
+      )
+  }
 
   cell_breaks = seq(0, max_signal, by = bin_size)
 
