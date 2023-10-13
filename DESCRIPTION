@@ -25,7 +25,8 @@ Imports:
     magrittr,
     purrr,
     recipes,
-    tidyr
+    tidyr,
+    withr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

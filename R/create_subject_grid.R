@@ -1,5 +1,5 @@
 
-#' Create Grid Data for single subject from raw accelerometry
+#' Create grid data for single subject from raw accelerometry of walking
 #'
 #' @param data a `data.frame` with the columns `time` and `vm`
 #' @param max_signal maximum signal of vector magnitude to create grid over,
@@ -7,6 +7,8 @@
 #' @param bin_size Size of the bins. `max_signal` must be
 #' evenly divisible by `bin_size`.
 #' @param lags the lag (in samples, not seconds) to compute bin inclusion.
+#' @param id identifier variable to identify subject, if `NULL`, then
+#' no `id` column is in the output
 #'
 #' @return A `data.frame` of subject level lags and cut-values
 #' @export
@@ -20,7 +22,8 @@ create_subject_predictor = function(
     data,
     max_signal = 3,
     bin_size = 0.25,
-    lags = c(15, 30, 45)
+    lags = c(15, 30, 45),
+    id = NULL
 ) {
   cut_lagsig = cut_sig = vm = lag_vm = time = second = NULL
   rm(list = c("time", "second", "vm", "lag_vm",
@@ -96,6 +99,8 @@ create_subject_predictor = function(
       names_sep = "_",
       values_from = n
     )
+
+  result$id = id
 
   return(result)
 }

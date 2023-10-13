@@ -16,8 +16,14 @@ testthat::test_that(
     testthat::expect_true(!anyNA(out$second))
 
     testthat::expect_warning(
-      {out = create_subject_predictor(df, lags = c(1, 101))},
+      {
+        out = create_subject_predictor(df, lags = c(1, 101))
+      },
       regexp = "max samples in a second"
+    )
+    # ensure all "bad" lags are dropped
+    testthat::expect_true(
+      !any(grepl("lag_101", colnames(out)))
     )
     testthat::expect_true(!anyNA(out$second))
 
